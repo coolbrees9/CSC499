@@ -45,7 +45,7 @@ void encrypt(string code, int key)
             if(isalpha(code[i]))
             {
                   //Uppercase letter
-                  if(isupper(temp[i]))
+                  if(isupper(code[i]))
                   {
                         temp += char(int(code[i] + key - 65) % 26 + 65);
                   }
@@ -56,7 +56,7 @@ void encrypt(string code, int key)
                   }
             }
             //Check for spaces
-            else if(int(code[i] == 32))
+            else if(int(code[i]) == 32)
             {
                   temp += " ";
             }
@@ -74,7 +74,7 @@ void decrypt(string code, int key)
             if(isalpha(code[i]))
             {
                   //Uppercase letter
-                  if(isupper(temp[i]))
+                  if(isupper(code[i]))
                   {
                         temp += char(int(code[i] - key - 65) % 26 + 65);
                   }
@@ -85,7 +85,7 @@ void decrypt(string code, int key)
                   }
             }
             //Check for spaces
-            else if(int(code[i] == 32))
+            else if(int(code[i]) == 32)
             {
                   temp += " ";
             }
