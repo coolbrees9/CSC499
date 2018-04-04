@@ -3,6 +3,9 @@
  *  CSC 499
  *  5/4/2018      */
 
+//This program will run the RSA Encryption Algorithm
+//based on what the user inputs as the message and the 
+//two public keys
 #include <cstdlib>
 #include <math.h>
 #include <string.h>
@@ -17,7 +20,7 @@ void decrypt(long int d[], long int en[100], long int temp[100], long int m[], l
 int main()
 {
       int i, j, k;
-      long int n, p, q, r, flag, e[100], d[100], m[100], en[100], temp[100];
+      long int n, p, q, r, prflag, e[100], d[100], m[100], en[100], temp[100];
       //Array to hold the input message
       char msg[100];      
       //Message to be encrypted
@@ -25,19 +28,19 @@ int main()
       fflush(stdin);
       cin.getline(msg, 100);
       
-      printf("Input first and second prime numbers, must be different numbers (Use a single space to seperate them): \n");
+      printf("Input first and second prime numbers greater than 7, must be different numbers(Use a space to seperate them): \n");
       cin >> p >> q;
       //Check if both numbers inputted are prime and are different
-      flag = prime(p);
-      if(flag == 0)
+      prflag = prime(p);
+      if(prflag == 0 || p < 7)
       {
-            cout << "Not a prime number\n";
+            cout << "Not a prime number or is less than 7\n";
             exit(1);
       }
-      flag = prime(q);
-      if(flag == 0 || p == q)
+      prflag = prime(q);
+      if(prflag == 0 || p == q || q < 7)
       {
-            cout << "Not a prime number and must be different numbers\n";
+            cout << "Not a prime number and must be different numbers or is less than 7\n";
             exit(1);
       }
       //Sets m equal to msg and goes until end of msg
@@ -50,14 +53,14 @@ int main()
       {
             if(r % i == 0)
                   continue;
-            flag = prime(i);
-            if(flag == 1 && i != p && i != q)
+            prflag = prime(i);
+            if(prflag == 1 && i != p && i != q)
             {
                   e[k] = i;
-                  flag = gcd(e[k], r);
-                  if(flag > 0)
+                  prflag = gcd(e[k], r);
+                  if(prflag > 0)
                   {
-                        d[k] = flag;
+                        d[k] = prflag;
                         k++;
                   }
                   if(k == 99)
@@ -132,8 +135,7 @@ void decrypt(long int d[], long int en[100], long int temp[100], long int m[], l
           k = 1;
           for(j = 0; j < key; j++)
           {
-              k = k * ct;
-              k = k % n;
+              k = (k * ct) % n;
           }
           pt = k + 96;
           m[i] = pt;
